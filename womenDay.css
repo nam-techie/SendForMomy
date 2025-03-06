@@ -216,7 +216,6 @@ body {
 }
 
 .gif-container {
-    display: none; /* Ban đầu ẩn GIF */
     position: absolute;
     width: 100%;
     top: 50%;
@@ -226,8 +225,15 @@ body {
     justify-content: space-between;
     width: 90%;
     max-width: 1500px;
-    height: 100vh; /* Chiều cao full màn hình */
+    height: 100vh;
     align-items: center;
+}
+
+.gif {
+    width: 200px; /* Cố định kích thước */
+    height: 200px;
+    object-fit: contain; /* Giữ nguyên tỉ lệ, không bị méo */
+    margin: 25px 0;
 }
 
 .gif-column {
@@ -237,12 +243,6 @@ body {
     height: 80vh; /* Tăng khoảng cách dọc giữa các ảnh */
 }
 
-.gif {
-    width: 200px; /* Cố định chiều rộng */
-    height: 200px; /* Cố định chiều cao */
-    object-fit: contain; /* Đảm bảo GIF không bị méo, giữ nguyên tỉ lệ */
-    margin: 25px 0; /* Tạo khoảng cách giữa các ảnh */
-}
 
 
 
