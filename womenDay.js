@@ -1,19 +1,17 @@
 window.onload = () => {
     let backgroundMusic = document.getElementById("backgroundMusic");
 
-    // Đặt màu nền ngay từ khi trang tải
-    $(".container").css("background-color", "#fde4ec");
-
-    // Bắt người dùng tương tác trước khi phát nhạc để tránh bị chặn autoplay
+    // Chỉ phát nhạc sau khi người dùng có tương tác
     document.body.addEventListener("click", () => {
         if (backgroundMusic.paused) {
             backgroundMusic.play();
             console.log("🎵 Phát nhạc nền golden_hour.mp3");
         }
-    }, { once: true }); // Chỉ chạy một lần duy nhất
+    }, { once: true }); // Chạy một lần duy nhất
 
-    console.log("✅ Trang đã tải xong, nền được đặt, nhạc sẽ phát sau khi người dùng click.");
+    console.log("✅ Trang đã tải xong, chờ tương tác để phát nhạc.");
 };
+
 
 
 
