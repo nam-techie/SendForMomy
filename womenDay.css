@@ -216,33 +216,35 @@ body {
 }
 
 .gif-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* Giữ GIF ở nền sau */
-    pointer-events: none; /* Để GIF không ảnh hưởng đến thao tác người dùng */
-}
-
-.floating-gif {
+    display: none; /* Ban đầu ẩn GIF */
     position: absolute;
-    width: 100px; /* Kích thước GIF */
-    height: auto;
-    opacity: 0.8;
-    animation: floatAnimation 10s infinite alternate ease-in-out;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1500px;
+    height: 100vh; /* Chiều cao full màn hình */
+    align-items: center;
 }
 
-@keyframes floatAnimation {
-    0% {
-        transform: translateY(0px) translateX(0px);
-    }
-    50% {
-        transform: translateY(30px) translateX(20px);
-    }
-    100% {
-        transform: translateY(0px) translateX(0px);
-    }
+.gif-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80vh; /* Tăng khoảng cách dọc giữa các ảnh */
 }
+
+.gif {
+    width: 200px; /* Cố định chiều rộng */
+    height: 200px; /* Cố định chiều cao */
+    object-fit: contain; /* Đảm bảo GIF không bị méo, giữ nguyên tỉ lệ */
+    margin: 25px 0; /* Tạo khoảng cách giữa các ảnh */
+}
+
+
+
 
 

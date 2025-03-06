@@ -1,40 +1,53 @@
-$("#messageState").on("change", (x) => {
-	$(".message").removeClass("openNor").removeClass("closeNor");
-	if ($("#messageState").is(":checked")) {
-		$(".message").removeClass("closed").removeClass("no-anim").addClass("openNor");
-		$(".heart").removeClass("closeHer").removeClass("openedHer").addClass("openHer");
-		$(".container").stop().animate({"backgroundColor": "#f48fb1"}, 2000);
-		console.log("Abrindo");
-	} else {
-		$(".message").removeClass("no-anim").addClass("closeNor");
-		$(".heart").removeClass("openHer").removeClass("openedHer").addClass("closeHer");
-		$(".container").stop().animate({"backgroundColor": "#fce4ec"}, 2000);
-		console.log("fechando");
-	}
+$("#messageState").on("change", () => {
+    let audio = document.getElementById("heartAudio");
+
+    $(".message").removeClass("openNor closeNor");
+
+    if ($("#messageState").is(":checked")) {
+        $(".message").removeClass("closed no-anim").addClass("openNor");
+        $(".heart").removeClass("closeHer openedHer").addClass("openHer");
+        $(".container").stop().animate({"backgroundColor": "#f48fb1"}, 2000);
+        $(".heart").css("z-index", "5");
+
+        // Chờ animation mở thư hoàn thành rồi mới hiện GIF
+        setTimeout(() => {
+            $(".gif-container").fadeIn(1000);
+        }, 2000);
+
+        // Phát âm thanh khi trái tim được bấm
+        audio.play();
+
+        console.log("Mở thư, hiển thị ảnh GIF và phát nhạc");
+    } else {
+        $(".message").removeClass("no-anim").addClass("closeNor");
+        $(".heart").removeClass("openHer openedHer").addClass("closeHer");
+        $(".container").stop().animate({"backgroundColor": "#fce4ec"}, 2000);
+        $(".heart").css("z-index", "1");
+
+        // Ẩn GIF ngay khi thư bắt đầu đóng
+        $(".gif-container").fadeOut(500);
+
+        // Dừng nhạc khi thư đóng
+        audio.pause();
+        audio.currentTime = 0; // Reset nhạc về đầu
+
+        console.log("Đóng thư, ẩn ảnh GIF và dừng nhạc");
+    }
 });
 
-$(".message").on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-	console.log("Animation End");
-	if ($(".message").hasClass("closeNor"))
-		$(".message").addClass("closed");
-	$(".message").removeClass("openNor").removeClass("closeNor").addClass("no-anim");
+
+$(".message").on("animationend webkitAnimationEnd oanimationend msAnimationEnd", () => {
+    if ($(".message").hasClass("closeNor")) {
+        $(".message").addClass("closed");
+    }
+    $(".message").removeClass("openNor closeNor").addClass("no-anim");
 });
 
-$(".heart").on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-	console.log("Animation End");
-	if (!$(".heart").hasClass("closeHer"))
-		$(".heart").addClass("openedHer").addClass("beating");
-	else
-		$(".heart").addClass("no-anim").removeClass("beating");
-	$(".heart").removeClass("openHer").removeClass("closeHer");
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    let gifs = document.querySelectorAll(".floating-gif");
-    gifs.forEach(gif => {
-        let randomX = Math.random() * window.innerWidth;
-        let randomY = Math.random() * window.innerHeight;
-        gif.style.left = `${randomX}px`;
-        gif.style.top = `${randomY}px`;
-    });
+$(".heart").on("animationend webkitAnimationEnd oanimationend msAnimationEnd", () => {
+    if (!$(".heart").hasClass("closeHer")) {
+        $(".heart").addClass("openedHer beating");
+    } else {
+        $(".heart").addClass("no-anim").removeClass("beating");
+    }
+    $(".heart").removeClass("openHer closeHer");
 });
